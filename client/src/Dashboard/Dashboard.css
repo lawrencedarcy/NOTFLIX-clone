@@ -12,12 +12,21 @@
 .dashboard-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
 
   width:90%;
   overflow-x: auto;
     white-space: nowrap;
     margin: auto;
-    height: 14rem;
+    height: 16rem;
     margin-top: 5rem;
+}
+
+.dashboard_label {
+
+}
+
+.dashboard_label-2 {
+
+  
 }

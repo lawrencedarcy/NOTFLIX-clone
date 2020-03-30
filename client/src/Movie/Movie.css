@@ -2,7 +2,8 @@
 
 
   display: inline-block;
-  
+  position: relative;
+
   margin: 0;
   padding: 0;
   width: 270px;
@@ -18,7 +19,8 @@
 
 .poster {
   width: 93%;
-  border: 2px solid black;
+  
+  position: relative;
 
   margin: auto;
   padding: 0;
@@ -29,5 +31,15 @@
   -moz-box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
   box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
   transform: scale(1.4);
+  z-index: 3;
+  border: 2px solid black;
 
+}
+
+.add {
+  position: absolute;
+
+  bottom: 5px;
+  right: 10px;
+  z-index: 5;
 }

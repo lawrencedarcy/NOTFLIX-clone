@@ -10,8 +10,12 @@ class Dashboard extends Component {
     super();
     this.state = {
       movies: [],
-      myList: []
+      myList: [],
+      
     }
+
+    this.showAddButton = this.showAddButton.bind(this);
+    this.addToList = this.addToList.bind(this);
   }
  
 
@@ -24,16 +28,32 @@ class Dashboard extends Component {
       })
   }
 
+  showAddButton(){
+
+  }
+
+  addToList(movie){
+    this.setState({myList: [...this.state.myList, movie]});
+    this.setState({movies: this.state.movies.filter(film => film.id !== movie.id)});
+  }
+
+
 
 
   render() {
+    const myList =  this.state.myList.length > 0 && 
+      <MovieList movies={this.state.myList} />
+    
+
     return (
       <div className='dashboard'>
         <Navbar />
 
        <div className='dashboard-container'>
-       <MovieList movies={this.state.myList} />
-       <MovieList movies={this.state.movies} />
+
+        
+       {myList}
+       <MovieList movies={this.state.movies} addToList={this.addToList}/>
        
       
        </div>

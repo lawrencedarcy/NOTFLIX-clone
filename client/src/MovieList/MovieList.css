@@ -1,4 +1,9 @@
-.movie_list {
 
 
+.list_label {
+
+  color: white;
+  margin: 1rem;
+  position: sticky;
+  font-size: 1.2rem;
 }
