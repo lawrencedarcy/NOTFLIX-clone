@@ -31,13 +31,13 @@ class Dashboard extends Component {
       <div className='dashboard'>
         <Navbar />
 
-        <div className='movie_list_container'>
-
-          this.state.movies.forEach(movie => {
-            <MovieList />
-          })
-          
-        </div>
+       <div className='dashboard-container'>
+       <MovieList movies={this.state.myList} />
+       <MovieList movies={this.state.movies} />
+       
+      
+       </div>
+         
 
      
       </div>

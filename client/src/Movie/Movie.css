@@ -1,0 +1,33 @@
+.movie_card {
+
+
+  display: inline-block;
+  
+  margin: 0;
+  padding: 0;
+  width: 270px;
+  
+}
+
+.movie_card:hover {
+
+  
+ 
+
+}
+
+.poster {
+  width: 93%;
+  border: 2px solid black;
+
+  margin: auto;
+  padding: 0;
+}
+
+.poster:hover {
+  -webkit-box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
+  -moz-box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
+  box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
+  transform: scale(1.4);
+
+}
