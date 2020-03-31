@@ -1,9 +1,35 @@
 
 
-.list_label {
 
-  color: white;
-  margin: 1rem;
-  position: sticky;
-  font-size: 1.2rem;
+.list_label {
+ 
+  color: #e5e5e5;
+  margin: 0rem;
+  
+  font-size: .9rem;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-weight: bold;
+  
+  margin-bottom: .7rem;
+} 
+
+
+.movie_list {
+   
+    margin-top: 0rem;
+    margin-bottom: 0rem;
+   
+}
+
+.movie_wrapper {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  flex-direction: column;
+  overflow-x: auto;
+  white-space: nowrap;
+  margin: auto;
+  height: 11rem;
+  padding-top: 1rem;
+  padding-bottom: 2rem;
 }

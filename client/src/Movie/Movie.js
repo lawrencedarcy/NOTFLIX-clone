@@ -11,15 +11,17 @@ class Movie extends Component {
 
 
   clickHandler(e) {
-
-    this.props.addToList()
+    this.props.addToList(this.props.movie);
   }
 
 
   render() {
     return (
       <div className="movie_card" onClick={this.clickHandler}> 
-       <img className="poster" src={`https://image.tmdb.org/t/p/w300/${this.props.img}`}></img>
+       <img 
+        className="poster" 
+        src={`https://image.tmdb.org/t/p/w300/${this.props.img}`}
+        alt={`Movie poster for ${this.props.title}`}></img>
       <div className="add">tick</div>
       </div>
     );

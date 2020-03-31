@@ -4,16 +4,17 @@ import './MovieList.css';
 
 class MovieList extends Component {
 
-  constructor(props){
-    super(props);
 
-  }
   render() {
     return (
+      
+      <div className="movie_wrapper">
+       <div className="list_label">{this.props.label}</div> 
       <div className="movie_list">
-<div className="list_label">My list</div>
         {this.props.movies.map(movie => (
-          <Movie 
+          <Movie
+          movie={movie} 
+          id={movie.id}
           key={movie.id}
           title={movie.title}
           img={movie.backdrop_path}
@@ -25,6 +26,9 @@ class MovieList extends Component {
         ))
         }
       </div>
+
+      </div>
+      
     );
   }
 }

@@ -4,27 +4,18 @@
  
   width: 100%;
 
-  height: 100vh;
+  height: 140vh;
  
   
 }
 
 .dashboard-container {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-
+ 
   width:90%;
-  overflow-x: auto;
-    white-space: nowrap;
-    margin: auto;
-    height: 16rem;
-    margin-top: 5rem;
+  margin: auto;
+ 
 }
 
-.dashboard_label {
-
-}
 
 .dashboard_label-2 {
 

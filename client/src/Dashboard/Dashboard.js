@@ -11,7 +11,7 @@ class Dashboard extends Component {
     this.state = {
       movies: [],
       myList: [],
-      
+      comMovies: []
     }
 
     this.showAddButton = this.showAddButton.bind(this);
@@ -24,9 +24,16 @@ class Dashboard extends Component {
       .then(res => {
         const movies = res.data;
         this.setState({ movies });
-        console.log(this.state.movies);
+        
+      });
+
+      axios.get(`http://movied.herokuapp.com/categories/35`)
+      .then(res => {
+        const comMovies  = res.data;
+        this.setState({ comMovies });
       })
   }
+
 
   showAddButton(){
 
@@ -37,29 +44,31 @@ class Dashboard extends Component {
     this.setState({movies: this.state.movies.filter(film => film.id !== movie.id)});
   }
 
-
-
-
   render() {
-    const myList =  this.state.myList.length > 0 && 
-      <MovieList movies={this.state.myList} />
+    const myList = this.state.myList.length > 0 && 
+      <MovieList movies={this.state.myList} label={'My List'}/>
     
+    const movieList =  <MovieList 
+      movies={this.state.movies} 
+      addToList={this.addToList}
+      label={'Trending now'}/>
+
+    const comMovies =  <MovieList 
+    movies={this.state.comMovies} 
+    addToList={this.addToList}
+    label={'Comedy'}/>
 
     return (
       <div className='dashboard'>
         <Navbar />
 
        <div className='dashboard-container'>
-
-        
-       {myList}
-       <MovieList movies={this.state.movies} addToList={this.addToList}/>
        
+       {myList }
+       {movieList}
+       {comMovies}
       
        </div>
-         
-
-     
       </div>
     );
   }
