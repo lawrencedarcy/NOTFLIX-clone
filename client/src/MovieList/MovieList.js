@@ -13,6 +13,9 @@ class MovieList extends Component {
       <div className="movie_list">
         {this.props.movies.map(movie => (
           <Movie
+          movieSelector={this.props.movieSelector}
+          myList={movie.myList}
+          feed={this.props.label}
           movie={movie} 
           id={movie.id}
           key={movie.id}

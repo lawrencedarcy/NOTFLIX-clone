@@ -9,8 +9,10 @@
   font-size: .9rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-weight: bold;
-  
-  margin-bottom: .7rem;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+  margin-left: .1rem;
+  padding-bottom: .1rem;
 } 
 
 
@@ -27,9 +29,10 @@
   justify-content: center;
   flex-direction: column;
   overflow-x: auto;
+  overflow-y: hide;
   white-space: nowrap;
   margin: auto;
   height: 11rem;
-  padding-top: 1rem;
-  padding-bottom: 2rem;
+  padding-top: .8rem;
+  padding-bottom: .8rem;
 }
