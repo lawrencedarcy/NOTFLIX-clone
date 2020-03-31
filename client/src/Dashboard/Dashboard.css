@@ -17,6 +17,7 @@
   max-width: 900px;
   height: 50vh;
   margin: auto;
+  margin-top: 1rem;
 }
 
 
@@ -61,7 +62,7 @@
 
 .hero_wrapper {
   height: 100%;
-  overflow: scroll;
+  overflow: hidden;
   
 }
 
@@ -71,6 +72,7 @@
   -webkit-box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
   -moz-box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
   box-shadow: 6px 6px 11px -2px rgba(0,0,0,0.75);
+  border: 2px solid black;
  
 }
 
@@ -91,7 +93,20 @@
 }
 
 .hero_release {
-  font-size: 0.9rem;
+  display: inline-block;
+  font-size: 0.8rem;
   font-weight: bold;
-  padding: .7rem 0rem;
+  padding: .5rem 0rem;
+}
+
+.hero_rating {
+  display: inline;
+  font-size: 0.8rem;
+  font-weight: bold;
+  padding: .5rem .7rem;
+}
+
+.red {
+  text-transform: uppercase;
+  color: rgb(229 9 20);
 }

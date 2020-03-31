@@ -7,11 +7,11 @@ class Navbar extends Component {
     return (
       <div className="navbar">
        <div className="logo_container">
-         <div className="logo"> NOTFLIX </div>
+        <a href="/"> <div className="logo"> NOTFLIX </div></a>
          </div>
         
          <div className="search_container">
-        <SearchBar />
+        <SearchBar searchMovies={this.props.searchMovies} />
       
          </div>
       </div>

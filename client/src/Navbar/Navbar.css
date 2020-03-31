@@ -6,7 +6,9 @@
   background-image: linear-gradient(black , rgb(29, 28, 28));
 }
 
-
+a {
+  text-decoration: none;
+}
 
 .logo_container {
   display: flex;

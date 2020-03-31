@@ -11,10 +11,12 @@ class Dashboard extends Component {
       movies: [],
       myList: [],
       comMovies: [],
-      selectedMovie: {}}
+      selectedMovie: {},
+      searchResults: []}
 
     this.addToList = this.addToList.bind(this);
     this.movieSelector = this.movieSelector.bind(this);
+    this.searchMovies = this.searchMovies.bind(this);
   }
 
   componentDidMount() {
@@ -28,23 +30,28 @@ class Dashboard extends Component {
       const comMovies = res.data;
       this.setState({ comMovies });
     });
-
-
-    
-
     
   }
 
   movieSelector(movie){
-  
     this.setState((state) => {
       return {selectedMovie: movie}
     });
 
   }
 
-  
-  
+  searchMovies(term){
+    console.log('search term' , term);
+    axios.get(`http://movied.herokuapp.com/search?q=${term}`).then(res => {
+      const searchResults = res.data;
+      this.setState({ searchResults }); 
+      console.log(searchResults)
+      this.setState((state) => {
+        return {selectedMovie:searchResults[0]}
+      });
+    });
+  }
+
 
   addToList(movie) {
 
@@ -95,11 +102,22 @@ class Dashboard extends Component {
       />
     );
 
+    const searchResults = (
+      <MovieList
+        movieSelector={this.movieSelector}
+        showAddButton={this.showAddButton}
+        movies={this.state.searchResults}
+        addToList={this.addToList}
+        label={'Search results'}
+      />
+    );
+
     const { selectedMovie } = this.state;
 
     return (
+      
       <div className='dashboard'>
-        <Navbar />
+        <Navbar searchMovies={this.searchMovies}/>
         <div className="hero">
           {
           this.state.selectedMovie &&
@@ -107,7 +125,9 @@ class Dashboard extends Component {
             <div className="hero_textbox">
               
             <div className="hero_title">{selectedMovie.title}</div>
-  <div className="hero_release"> Released: {selectedMovie.release_date && selectedMovie.release_date.split("-").reverse().join("-")}</div>
+  <div className="hero_release"> <div className="hero_release red">Released:</div> {selectedMovie.release_date && selectedMovie.release_date.split("-").reverse().join("-")}</div>
+  <div className="hero_rating">  <div className="hero_release red">IMDB rating: </div> {selectedMovie.vote_average}</div>
+
           <div className="hero_overview">{selectedMovie.overview}</div> 
             </div>
             <div className="hero_image_container" >
@@ -120,9 +140,11 @@ class Dashboard extends Component {
 
         </div>
         <div className='dashboard-container'>
-          {myList}
-          {movieList}
-          {comMovies}
+        {this.state.searchResults.length > 0 
+        ? [searchResults]
+        :[myList, movieList, comMovies]
+      }
+          
         </div>
       </div>
     );
