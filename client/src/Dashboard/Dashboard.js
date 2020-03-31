@@ -11,7 +11,7 @@ class Dashboard extends Component {
       movies: [],
       myList: [],
       comMovies: [],
-      selectedMovie: null
+      selectedMovie: undefined
       
     };
 
@@ -35,9 +35,14 @@ class Dashboard extends Component {
   }
 
   movieSelector(movie){
-    
-    this.setState({selectedMovie: movie})
+  
+    this.setState((state) => {
+      return {selectedMovie: movie}
+    });
+
   }
+
+  
   
 
   addToList(movie) {
@@ -94,9 +99,18 @@ class Dashboard extends Component {
         <Navbar />
         <div className="hero">
           {
-          this.state.selectedTitle &&
-        <div class="hero_title">{this.state.selectedMovie.title} HELLOOO</div>
-
+          this.state.selectedMovie &&
+          <div className="hero_wrapper"> 
+            <div className="hero_textbox">
+              
+            <div className="hero_title">{this.state.selectedMovie.title}</div>
+        <div className="hero_overview">{this.state.selectedMovie.overview}</div> 
+            </div>
+            <div className="hero_image_container" >
+        <img className="hero_image" src={`https://image.tmdb.org/t/p/w300/${this.state.selectedMovie.poster_path}`} />
+            </div>
+          </div>
+        
           }
         
          
