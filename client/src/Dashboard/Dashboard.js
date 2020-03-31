@@ -11,9 +11,7 @@ class Dashboard extends Component {
       movies: [],
       myList: [],
       comMovies: [],
-      selectedMovie: undefined
-      
-    };
+      selectedMovie: {}}
 
     this.addToList = this.addToList.bind(this);
     this.movieSelector = this.movieSelector.bind(this);
@@ -23,6 +21,7 @@ class Dashboard extends Component {
     axios.get(`http://movied.herokuapp.com/discover`).then(res => {
       const movies = res.data;
       this.setState({ movies });
+      this.movieSelector(this.state.movies[0]);
     });
 
     axios.get(`http://movied.herokuapp.com/categories/35`).then(res => {
@@ -31,7 +30,9 @@ class Dashboard extends Component {
     });
 
 
-    this.setState({selectedMovie: this.state.movies[0]})
+    
+
+    
   }
 
   movieSelector(movie){
@@ -94,6 +95,8 @@ class Dashboard extends Component {
       />
     );
 
+    const { selectedMovie } = this.state;
+
     return (
       <div className='dashboard'>
         <Navbar />
@@ -103,8 +106,9 @@ class Dashboard extends Component {
           <div className="hero_wrapper"> 
             <div className="hero_textbox">
               
-            <div className="hero_title">{this.state.selectedMovie.title}</div>
-        <div className="hero_overview">{this.state.selectedMovie.overview}</div> 
+            <div className="hero_title">{selectedMovie.title}</div>
+  <div className="hero_release"> Released: {selectedMovie.release_date && selectedMovie.release_date.split("-").reverse().join("-")}</div>
+          <div className="hero_overview">{selectedMovie.overview}</div> 
             </div>
             <div className="hero_image_container" >
         <img className="hero_image" src={`https://image.tmdb.org/t/p/w300/${this.state.selectedMovie.poster_path}`} />
@@ -113,8 +117,6 @@ class Dashboard extends Component {
         
           }
         
-         
-
 
         </div>
         <div className='dashboard-container'>
