@@ -3,9 +3,12 @@
   box-sizing: border-box;
   width: 80%;
   max-width: 900px;
-  height: 50vh;
+  height: 20rem;
+  max-height: 20rem;
+  min-height: 20rem;
   margin: auto;
   margin-top: 1rem;
+  overflow: hidden;
 }
 
 
@@ -50,8 +53,7 @@
 }
 
 .hero_wrapper {
-  height: 50vh;
-  min-height: 50vh;
+
   overflow: scroll;
   
 }
