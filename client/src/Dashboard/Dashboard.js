@@ -8,25 +8,33 @@ import axios from 'axios';
 const Dashboard = () => {
   
     const [movies, setMovies ] = useState([]);
-    const [myList, setMyList ] = useState([]);
+    const [myList, setMyList ] = useState( []);
     const [comMovies, setComMovies ] = useState([]);
     const [selectedMovie, setSelectedMovie] = useState([]);
     const [searchResults, setSearchResults] = useState({});
       
     useEffect(() => {
       
-      axios.get(`http://movied.herokuapp.com/discover`).then(res => {
+      axios.get(`https://movied.herokuapp.com/discover`).then(res => {
         const movies = res.data;
         setMovies(movies);
         movieSelector(movies[0]);
       });
   
-      axios.get(`http://movied.herokuapp.com/categories/35`).then(res => {
+      axios.get(`https://movied.herokuapp.com/categories/35`).then(res => {
         const comMovies = res.data;
         setComMovies(comMovies);
       });
 
+      localStorage.getItem('myList') && setMyList(JSON.parse(localStorage.getItem('myList'))); 
+
     }, []);
+
+    useEffect(() => {
+
+      localStorage.setItem('myList', JSON.stringify(myList));
+    
+    },[myList])
 
   const movieSelector = (movie) =>{
     setSelectedMovie(movie);
@@ -34,7 +42,7 @@ const Dashboard = () => {
 
   const searchMovies = (term) => {
    
-    axios.get(`http://movied.herokuapp.com/search?q=${term}`).then(res => {
+    axios.get(`https://movied.herokuapp.com/search?q=${term}`).then(res => {
       const results = res.data;
       setSearchResults(() => results); 
       setSelectedMovie(results[0]);
