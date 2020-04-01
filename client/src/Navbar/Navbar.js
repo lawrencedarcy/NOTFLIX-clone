@@ -7,7 +7,7 @@ const Navbar = (props) => {
   return (
     <div className="navbar">
     <div className="logo_container">
-     <a href="/"> <div className="logo"> NOTFLIX </div></a>
+     <a href=""> <div className="logo"> NOTFLIX </div></a>
       </div>
      
       <div className="search_container">
