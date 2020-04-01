@@ -29,7 +29,7 @@
   justify-content: center;
   flex-direction: column;
   overflow-x: auto;
-  overflow-y: hide;
+  overflow-y: hidden;
   white-space: nowrap;
   margin: auto;
   height: 11rem;

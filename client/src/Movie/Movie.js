@@ -14,7 +14,7 @@ class Movie extends Component {
       isHovered: false,
     
     };
-
+    this.minusHandler = this.minusHandler.bind(this);
     this.showAddButton = this.showAddButton.bind(this);
   }
 
@@ -22,7 +22,13 @@ class Movie extends Component {
   clickHandler() {
     !this.props.myList &&
     this.props.addToList(this.props.movie);
-  
+    
+  }
+
+  minusHandler(){
+    this.props.removeFromList(this.props.movie);
+    this.setState({isHovered: false});
+
   }
 
   hoverHandler(){
@@ -36,12 +42,9 @@ class Movie extends Component {
 
   truncatedTitle(title){
     const num = 20;
-
-    if (title.length <= num) {
-      return title
-    }
-
-    return title.slice(0, num) + '...'
+    return (title.length <= num )
+    ? title
+    : title.slice(0, num) + '...'
   }
 
  
@@ -65,7 +68,12 @@ class Movie extends Component {
       {(this.state.isHovered && this.props.myList) ?
       <svg className="add" height="25" viewBox="0 0 25 25" width="25" xmlns="http://www.w3.org/2000/svg"><g fill="none" fillRule="evenodd"><circle cx="12.5" cy="12.5" r="11.5" stroke="#fff"/><g stroke="#e0e0e0" strokeLinecap="square" transform="translate(7 6)"><path d="m.93453544 6.00041853 3.62618582 5.59960937"/><path d="m9.63738142 1.20075335-5.07666016 10.39927455"/></g></g></svg>
       : null }
-      
+      {(this.state.isHovered && this.props.myList && this.props.feed === "My List") ?
+      <svg  onClick={this.minusHandler} className="minus" viewbox="0 0 25 25">
+      <circle cx="12.5" cy="12.5" r="12" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+      <line x1="6" y1="12.5" x2="19" y2="12.5"  fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" vectorEffect="non-scaling-stroke" />
+    </svg>
+      : null }
 
   <div className="title">{this.truncatedTitle(this.props.title)}</div> 
   

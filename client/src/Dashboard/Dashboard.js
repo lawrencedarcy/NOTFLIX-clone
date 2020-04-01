@@ -17,6 +17,7 @@ class Dashboard extends Component {
     this.addToList = this.addToList.bind(this);
     this.movieSelector = this.movieSelector.bind(this);
     this.searchMovies = this.searchMovies.bind(this);
+    this.removeFromList = this.removeFromList.bind(this);
   }
 
   componentDidMount() {
@@ -75,11 +76,32 @@ class Dashboard extends Component {
       this.setState({comMovies: comedies});
   }
 
+  removeFromList(movie){
+    movie.myList = undefined;
+    let list = this.state.myList.filter(film => film.id != movie.id);
+    this.setState({myList: list});
+
+    let comedies = this.state.comMovies;
+      comedies.forEach(film => {
+        if(film.id === movie.id) 
+        {film.myList = undefined   }
+      })
+
+      let trending = this.state.movies;
+      trending.forEach(film => {
+        if(film.id === movie.id) 
+        {film.myList = undefined }
+      })
+      this.setState({movies: trending});
+      this.setState({comMovies: comedies});
+  }
+
   render() {
     const myList = this.state.myList.length > 0 && (
       <MovieList movies={this.state.myList} 
       label={'My List'}
-      movieSelector={this.movieSelector} />
+      movieSelector={this.movieSelector}
+      removeFromList={this.removeFromList} />
     );
 
     const movieList = (
@@ -130,9 +152,11 @@ class Dashboard extends Component {
 
           <div className="hero_overview">{selectedMovie.overview}</div> 
             </div>
-            <div className="hero_image_container" >
-        <img className="hero_image" src={`https://image.tmdb.org/t/p/w300/${this.state.selectedMovie.poster_path}`} />
-            </div>
+            { this.state.selectedMovie.poster_path &&
+              <div className="hero_image_container" >
+              <img className="hero_image" src={`https://image.tmdb.org/t/p/w300/${this.state.selectedMovie.poster_path}`} />
+                  </div>
+            }
           </div>
         
           }

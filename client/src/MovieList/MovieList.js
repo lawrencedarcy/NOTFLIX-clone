@@ -13,6 +13,7 @@ class MovieList extends Component {
       <div className="movie_list">
         {this.props.movies.map(movie => (
           <Movie
+          removeFromList={this.props.removeFromList}
           movieSelector={this.props.movieSelector}
           myList={movie.myList}
           feed={this.props.label}
@@ -21,9 +22,6 @@ class MovieList extends Component {
           key={movie.id}
           title={movie.title}
           img={movie.backdrop_path}
-          description={movie.overview}
-          release={movie.release_date}
-          rating={movie.vote_average}
           addToList={this.props.addToList}    
           />
         ))
