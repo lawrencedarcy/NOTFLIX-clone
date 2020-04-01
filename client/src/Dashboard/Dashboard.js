@@ -1,178 +1,141 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import Navbar from '../Navbar/Navbar';
 import './Dashboard.css';
 import MovieList from '../MovieList/MovieList';
+import Hero from '../Hero/Hero';
 import axios from 'axios';
 
-class Dashboard extends Component {
-  constructor() {
-    super();
-    this.state = {
-      movies: [],
-      myList: [],
-      comMovies: [],
-      selectedMovie: {},
-      searchResults: []}
-
-    this.addToList = this.addToList.bind(this);
-    this.movieSelector = this.movieSelector.bind(this);
-    this.searchMovies = this.searchMovies.bind(this);
-    this.removeFromList = this.removeFromList.bind(this);
-  }
-
-  componentDidMount() {
-    axios.get(`http://movied.herokuapp.com/discover`).then(res => {
-      const movies = res.data;
-      this.setState({ movies });
-      this.movieSelector(this.state.movies[0]);
-    });
-
-    axios.get(`http://movied.herokuapp.com/categories/35`).then(res => {
-      const comMovies = res.data;
-      this.setState({ comMovies });
-    });
-    
-  }
-
-  movieSelector(movie){
-    this.setState((state) => {
-      return {selectedMovie: movie}
-    });
-
-  }
-
-  searchMovies(term){
-    console.log('search term' , term);
-    axios.get(`http://movied.herokuapp.com/search?q=${term}`).then(res => {
-      const searchResults = res.data;
-      this.setState({ searchResults }); 
-      console.log(searchResults)
-      this.setState((state) => {
-        return {selectedMovie:searchResults[0]}
+const Dashboard = () => {
+  
+    const [movies, setMovies ] = useState([]);
+    const [myList, setMyList ] = useState([]);
+    const [comMovies, setComMovies ] = useState([]);
+    const [selectedMovie, setSelectedMovie] = useState([]);
+    const [searchResults, setSearchResults] = useState({});
+      
+    useEffect(() => {
+      
+      axios.get(`http://movied.herokuapp.com/discover`).then(res => {
+        const movies = res.data;
+        setMovies(movies);
+        movieSelector(movies[0]);
       });
+  
+      axios.get(`http://movied.herokuapp.com/categories/35`).then(res => {
+        const comMovies = res.data;
+        setComMovies(comMovies);
+      });
+
+    }, []);
+
+  const movieSelector = (movie) =>{
+    setSelectedMovie(movie);
+  }
+
+  const searchMovies = (term) => {
+   
+    axios.get(`http://movied.herokuapp.com/search?q=${term}`).then(res => {
+      const results = res.data;
+      setSearchResults(() => results); 
+      setSelectedMovie(results[0]);
     });
   }
 
-
-  addToList(movie) {
+  const addToList = (movie) => {
 
     movie.myList = true;
 
-    !this.state.myList.includes(movie) &&
-      this.setState({ myList: [...this.state.myList, movie] });
+    !myList.includes(movie) &&
+      setMyList([...myList, movie]);
 
-      let comedies = this.state.comMovies;
+    let comedies = comMovies;
       comedies.forEach(film => {
         if(film.id === movie.id) 
-        {film.myList = true   }
+        {film.myList = true }
       })
 
-      let trending = this.state.movies;
+      let trending = movies;
       trending.forEach(film => {
         if(film.id === movie.id) 
         {film.myList = true}
       })
-      this.setState({movies: trending});
-      this.setState({comMovies: comedies});
+      setMovies(trending);
+      setComMovies(comedies);
   }
 
-  removeFromList(movie){
+  const removeFromList = (movie) => {
     movie.myList = undefined;
-    let list = this.state.myList.filter(film => film.id != movie.id);
-    this.setState({myList: list});
+    let list = myList.filter(film => film.id != movie.id);
+    setMyList(list);
 
-    let comedies = this.state.comMovies;
+    let comedies = comMovies;
       comedies.forEach(film => {
         if(film.id === movie.id) 
         {film.myList = undefined   }
       })
 
-      let trending = this.state.movies;
+      let trending = movies;
       trending.forEach(film => {
         if(film.id === movie.id) 
         {film.myList = undefined }
       })
-      this.setState({movies: trending});
-      this.setState({comMovies: comedies});
+      setMovies(trending);
+      setComMovies(comedies);
   }
 
-  render() {
-    const myList = this.state.myList.length > 0 && (
-      <MovieList movies={this.state.myList} 
+  
+    const myMovieList = myList.length > 0 && (
+      <MovieList movies={myList} 
       label={'My List'}
-      movieSelector={this.movieSelector}
-      removeFromList={this.removeFromList} />
+      movieSelector={movieSelector}
+      removeFromList={removeFromList} />
     );
 
     const movieList = (
       <MovieList
-        movieSelector={this.movieSelector}
-        showAddButton={this.showAddButton}
-        movies={this.state.movies}
-        addToList={this.addToList}
+        movieSelector={movieSelector}
+       
+        movies={movies}
+        addToList={addToList}
         label={'Trending now'}
       />
     );
 
-    const comMovies = (
+    const comedyMovies = (
       <MovieList
-        movieSelector={this.movieSelector}
-        showAddButton={this.showAddButton}
-        movies={this.state.comMovies}
-        addToList={this.addToList}
+        movieSelector={movieSelector}
+       
+        movies={comMovies}
+        addToList={addToList}
         label={'Comedy'}
       />
     );
 
-    const searchResults = (
+    const userSearchResults = (
       <MovieList
-        movieSelector={this.movieSelector}
-        showAddButton={this.showAddButton}
-        movies={this.state.searchResults}
-        addToList={this.addToList}
+        movieSelector={movieSelector}
+        
+        movies={searchResults}
+        addToList={addToList}
         label={'Search results'}
       />
     );
 
-    const { selectedMovie } = this.state;
-
     return (
       
       <div className='dashboard'>
-        <Navbar searchMovies={this.searchMovies}/>
-        <div className="hero">
-          {
-          this.state.selectedMovie &&
-          <div className="hero_wrapper"> 
-            <div className="hero_textbox">
-              
-            <div className="hero_title">{selectedMovie.title}</div>
-  <div className="hero_release"> <div className="hero_release red">Released:</div> {selectedMovie.release_date && selectedMovie.release_date.split("-").reverse().join("-")}</div>
-  <div className="hero_rating">  <div className="hero_release red">IMDB rating: </div> {selectedMovie.vote_average}</div>
-
-          <div className="hero_overview">{selectedMovie.overview}</div> 
-            </div>
-            { this.state.selectedMovie.poster_path &&
-              <div className="hero_image_container" >
-              <img className="hero_image" src={`https://image.tmdb.org/t/p/w300/${this.state.selectedMovie.poster_path}`} />
-                  </div>
-            }
-          </div>
-        
-          }
-        
-
-        </div>
+        <Navbar searchMovies={searchMovies}/>
+        <Hero selectedMovie={selectedMovie}/>
         <div className='dashboard-container'>
-        {this.state.searchResults.length > 0 
-        ? [searchResults]
-        :[myList, movieList, comMovies]
+        {searchResults.length > 0 
+        ? [userSearchResults]
+        :[myMovieList, movieList, comedyMovies]
       }
           
         </div>
       </div>
     );
   }
-}
+
 
 export default Dashboard;
